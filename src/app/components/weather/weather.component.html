@@ -1,0 +1,26 @@
+<div class="container mt-5 text-center">
+    <h2>Weather App</h2>
+    <input type="text" [(ngModel)]="city" class="form-control mt-3" placeholder="Example: Lucknow, IN">
+    <button class="btn btn-primary mt-2 me-2" (click)="getWeather()">Get Weather</button>
+
+    <div *ngIf="weatherData">
+        <h3>{{ weatherData.name }}, {{ weatherData.sys.country }}</h3>
+        <h4>{{ weatherData.main.temp }}°C</h4>
+        <img [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'" alt="Weather Icon">
+        <p>{{ weatherData.weather[0].description | titlecase }}</p>
+    </div>
+
+    <div *ngIf="forecastData.length">
+        <h3>5-Day Forecast</h3>
+        <div *ngFor="let day of forecastData">
+            <h4>{{ day.dt_txt | date:'EEEE, MMM d' }}</h4>
+            <p>{{ day.main.temp }}°C</p>
+            <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Icon">
+        </div>
+    </div>
+
+    <button (click)="getLocationWeather()" class="btn btn-secondary mt-2">Get My Location's Weather</button>
+
+    <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+
+</div>
